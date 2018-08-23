@@ -12,8 +12,8 @@ if !has('nvim')
 endif
 
 
-command! Python call s:ipython()
-command! Python -range call ipython#run_paste()
+command! Ipython call s:ipython()
+command! Ipython -range call ipython#run_paste()
 
 
 fun! s:ipython(...) abort
