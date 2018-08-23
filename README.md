@@ -20,15 +20,25 @@ neovimを開いて下記コマンドを実行
 
 ## コマンド
 
-| 使い方  | 説明                                                                       |
-|:--------|:---------------------------------------------------------------------------|
-| :Ipython | 現在編集中のPythonスクリプトを実行する  (ipythonウィンドウが無ければ開く ) |
+| 使い方    | 説明                                                                       |
+|:----------|:---------------------------------------------------------------------------|
+| :Ipython  | 現在編集中のPythonスクリプトを実行する  (ipythonウィンドウが無ければ開く ) |
+| :VIpython | Visual modeで選択している行を実行する  (ipythonウィンドウが無ければ開く )  |
+
+
+## キーマッピング (おすすめ)
+
+```vimscript
+nnoremap  <leader>ip  :Ipython<CR>
+vnoremap  <leader>ip  :VIpython<CR>
+```
 
 ## 関数
 
-| 名前            | 説明                                   |
-|:----------------|:---------------------------------------|
-| ipython#open()  | ipythonウィンドウを開く                |
-| ipython#close() | ipythonウィンドウを閉じる              |
-| ipython#exist() | ipythonウィンドウの存在確認            |
-| ipython#run()   | 現在編集中のPythonスクリプトを実行する |
+| 名前                 | 説明                                   |
+|:---------------------|:---------------------------------------|
+| ipython#open()       | ipythonウィンドウを開く                |
+| ipython#close()      | ipythonウィンドウを閉じる              |
+| ipython#exist()      | ipythonウィンドウの存在確認            |
+| ipython#run()        | 現在編集中のPythonスクリプトを実行する |
+| ipython#run_visual() | Visual modeで選択している行を実行する  |
