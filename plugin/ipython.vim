@@ -15,19 +15,17 @@ endif
 command! Python call s:ipython()
 
 
-fun! s:ipython() abort
-    " Pythonコンソールウィンドウを作り、編集中のPythonスクリプトを実行する関数
+fun! s:ipython(...) abort
+    " Pythonコンソールウィンドウを作る or Pythonスクリプトを実行する関数
     " szkny/SplitTerm プラグインを利用している
     "      以下のように使用する
     "      :Python
-    if &filetype ==# 'python'
-        if ipython#exist()
-            "" コンソールウィンドウが有ればスクリプトを実行
-            call ipython#run()
-        else
-            "" コンソールウィンドウが無ければコンソール用のウィンドウを作る
-            call ipython#open()
-        endif
+    if ipython#exist()
+        "" コンソールウィンドウが有ればスクリプトを実行
+        call ipython#run()
+    else
+        "" コンソールウィンドウが無ければコンソール用のウィンドウを作る
+        call ipython#open()
     endif
 endf
 
@@ -48,6 +46,13 @@ fun! ipython#open() abort
     let s:ipython.info = splitterm#getinfo()
     silent exe 'normal G'
     call win_gotoid(l:script_winid)
+endf
+
+
+fun! ipython#close() abort
+    if ipython#exist()
+        call splitterm#close(s:ipython.info)
+    endif
 endf
 
 
@@ -81,20 +86,22 @@ endf
 
 
 fun! ipython#run() abort
-    let l:script_name = expand('%:p')
-    let l:script_dir = expand('%:p:h')
-    if has_key(s:ipython, 'script_name')
-        \&& s:ipython.script_name !=# l:script_name
-        call splitterm#jobsend_id(s:ipython.info, '%reset')
-        call splitterm#jobsend_id(s:ipython.info, 'y')
+    if &filetype ==# 'python'
+        let l:script_name = expand('%:p')
+        let l:script_dir = expand('%:p:h')
+        if has_key(s:ipython, 'script_name')
+            \&& s:ipython.script_name !=# l:script_name
+            call splitterm#jobsend_id(s:ipython.info, '%reset')
+            call splitterm#jobsend_id(s:ipython.info, 'y')
+        endif
+        if has_key(s:ipython, 'script_dir')
+            \ && s:ipython.script_dir !=# l:script_dir
+            call splitterm#jobsend_id(s:ipython.info, '%cd '.l:script_dir)
+        endif
+        let s:ipython.script_name = l:script_name
+        let s:ipython.script_dir = l:script_dir
+        call splitterm#jobsend_id(s:ipython.info, '%run '.s:ipython.script_name)
     endif
-    if has_key(s:ipython, 'script_dir')
-        \ && s:ipython.script_dir !=# l:script_dir
-        call splitterm#jobsend_id(s:ipython.info, '%cd '.l:script_dir)
-    endif
-    let s:ipython.script_name = l:script_name
-    let s:ipython.script_dir = l:script_dir
-    call splitterm#jobsend_id(s:ipython.info, '%run '.s:ipython.script_name)
 endf
 
 
