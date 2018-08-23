@@ -13,7 +13,7 @@ endif
 
 
 command! Ipython call s:ipython()
-command! Ipython -range call ipython#run_paste()
+command! -range Ipython call ipython#run_paste()
 
 
 fun! s:ipython(...) abort
