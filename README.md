@@ -28,9 +28,29 @@ neovimを開いて下記コマンドを実行
 
 ## キーマッピング (おすすめ)
 
+`init.vim`に以下を追加  
+
 ```vimscript
 nnoremap  <leader>ip  :Ipython<CR>
 vnoremap  <leader>ip  :VIpython<CR>
+```
+
+## Ipythonの起動オプションを指定する
+
+`init.vim`にリストで定義  
+
+```vimscript
+let g:ipython_options = ['--no-banner']
+```
+
+以下はデフォルト  
+
+```vimscript
+let g:ipython_options = [
+            \'--no-confirm-exit',
+            \'--colors=Linux',
+            \'--pdb',
+            \'--no-banner']
 ```
 
 ## 関数

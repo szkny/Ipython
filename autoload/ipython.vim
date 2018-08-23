@@ -14,10 +14,22 @@ let g:ipython_plugin_loaded = 1
 " インスタンス
 let s:ipython = {}
 
+" ipythonの起動オプション
+let g:ipython_options = get(g:, 'ipython_options',
+            \['--no-confirm-exit',
+            \'--colors=Linux',
+            \'--pdb',
+            \'--no-banner'])
+if type(g:ipython_options) != 3
+    echomsg 'the variable "g:ipython_options" must be list.'
+    finish
+endif
+
 fun! ipython#open() abort
     if !ipython#exist()
         let l:command = 'ipython'
-        let l:args = '--no-confirm-exit --colors=Linux --profile='.s:init_ipython()
+        let g:ipython_options += ['--profile='.s:init_ipython()]
+        let l:args = join(g:ipython_options, ' ')
         let l:filename = ' ' . expand('%')
         if findfile('Pipfile', expand('%:p')) !=# ''
             \ && findfile('Pipfile.lock', expand('%:p')) !=# ''
@@ -44,6 +56,7 @@ endf
 
 fun! s:init_ipython() abort
     " ipythonの初期化関数
+    "   (~/.ipython/profile_Ipython.vimを生成する)
     if !executable('ipython')
         echon 'Ipython: [error] ipython does not exist.'
         echon '                 isntalling ipython ...'
