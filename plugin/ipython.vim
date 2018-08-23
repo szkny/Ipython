@@ -13,6 +13,7 @@ endif
 
 
 command! Python call s:ipython()
+command! Python -range call ipython#run_paste()
 
 
 fun! s:ipython(...) abort
@@ -101,6 +102,14 @@ fun! ipython#run() abort
         let s:ipython.script_name = l:script_name
         let s:ipython.script_dir = l:script_dir
         call splitterm#jobsend_id(s:ipython.info, '%run '.s:ipython.script_name)
+    endif
+endf
+
+
+fun! ipython#run_paste() abort range
+    if $filetype ==# 'python'
+        exe 'yank'
+        call splitterm#jobsend_id(s:ipython.info, '%paste')
     endif
 endf
 
