@@ -3,7 +3,7 @@
 ## 概要
 
 neovimのターミナルモードからipythonを呼び出すプラグインです。  
-`szkny/SplitTerm`を利用しています。
+[`szkny/SplitTerm`](https://github.com/szkny/SplitTerm)を利用しています。
 
 ## インストール
 
