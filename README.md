@@ -49,7 +49,6 @@ let g:ipython_options = ['--no-banner']
 let g:ipython_options = [
             \'--no-confirm-exit',
             \'--colors=Linux',
-            \'--pylab',
             \'--no-banner']
 ```
 

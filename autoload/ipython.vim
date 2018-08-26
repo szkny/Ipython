@@ -18,7 +18,6 @@ let s:ipython = {}
 let g:ipython_options = get(g:, 'ipython_options',
             \['--no-confirm-exit',
             \'--colors=Linux',
-            \'--pylab',
             \'--no-banner'])
 if type(g:ipython_options) != 3
     echomsg 'the variable "g:ipython_options" must be list.'
