@@ -15,20 +15,25 @@ let g:ipython_plugin_loaded = 1
 let s:ipython = {}
 
 " ipythonの起動オプション
-let g:ipython_options = get(g:, 'ipython_options',
+let g:ipython_startup_options = get(g:, 'ipython_options',
             \['--no-confirm-exit',
             \'--colors=Linux',
             \'--no-banner'])
-if type(g:ipython_options) != 3
-    echomsg 'the variable "g:ipython_options" must be list.'
+if type(g:ipython_startup_options) != 3
+    echomsg 'the variable "g:ipython_startup_options" must be list.'
+    finish
+endif
+let g:ipython_startup_import_modules = get(g:, 'ipython_startup_import_modules', [])
+if type(g:ipython_startup_import_modules) != 3
+    echomsg 'the variable "g:ipython_startup_import_modules" must be list.'
     finish
 endif
 
 fun! ipython#open() abort
     if !ipython#exist()
         let l:command = 'ipython'
-        let g:ipython_options += ['--profile='.s:init_ipython()]
-        let l:args = join(g:ipython_options, ' ')
+        let g:ipython_startup_options += ['--profile='.s:init_ipython()]
+        let l:args = join(g:ipython_startup_options, ' ')
         let l:filename = ' ' . expand('%')
         if findfile('Pipfile', expand('%:p')) !=# ''
             \ && findfile('Pipfile.lock', expand('%:p')) !=# ''
@@ -78,6 +83,7 @@ fun! s:init_ipython() abort
                 \'mgc = get_ipython().magic',
                 \'mgc("%load_ext autoreload")',
                 \'mgc("%autoreload 2")']
+    let l:ipython_init_command += g:ipython_startup_import_modules
     if &filetype ==# 'python'
         let l:ipython_init_command += ['from '.expand('%:t:r').' import *']
     endif

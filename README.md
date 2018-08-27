@@ -40,16 +40,24 @@ vnoremap  <leader>ip  :VIpython<CR>
 `init.vim`にリストで定義  
 
 ```vimscript
-let g:ipython_options = ['--no-banner']
+let g:ipython_startup_options = [
+            \'--no-confirm-exit',]
+
+let g:ipython_startup_import_modules = [
+            \'import matplotlib.pyplot as plt',
+            \'import pandas as pd',
+            \'import numpy as np']
 ```
 
 以下はデフォルト  
 
 ```vimscript
-let g:ipython_options = [
+let g:ipython_startup_options = [
             \'--no-confirm-exit',
             \'--colors=Linux',
             \'--no-banner']
+
+let g:ipython_startup_options = []
 ```
 
 ## 関数
@@ -61,7 +69,3 @@ let g:ipython_options = [
 | ipython#exist()      | ipythonウィンドウの存在確認            |
 | ipython#run()        | 現在編集中のPythonスクリプトを実行する |
 | ipython#run_visual() | Visual modeで選択している行を実行する  |
-
-## To Do
-
-- デフォルトでインポートするモジュールリストを init.vim で与えられる機能 (let g:ipython_default_import_modules)
