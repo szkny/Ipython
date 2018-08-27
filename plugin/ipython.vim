@@ -5,12 +5,10 @@
 "=============================================================================
 scriptencoding utf-8
 
-
 if !has('nvim')
     echomsg 'SplitTerm requires Neovim.'
     finish
 endif
-
 
 command! Ipython call ipython#run()
 command! -range VIpython call ipython#run_visual()

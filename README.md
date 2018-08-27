@@ -61,3 +61,7 @@ let g:ipython_options = [
 | ipython#exist()      | ipythonウィンドウの存在確認            |
 | ipython#run()        | 現在編集中のPythonスクリプトを実行する |
 | ipython#run_visual() | Visual modeで選択している行を実行する  |
+
+## To Do
+
+- デフォルトでインポートするモジュールリストを init.vim で与えられる機能 (let g:ipython_default_import_modules)
