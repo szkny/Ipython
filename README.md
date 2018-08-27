@@ -6,7 +6,7 @@ neovimのターミナルモードからipythonを呼び出すプラグインで�
 [`szkny/SplitTerm`](https://github.com/szkny/SplitTerm)を利用しています。
 
 - このプラグインでできること
-    - Ipythonコンソールでスクリプトを実行 (実行後もコンソールと変数を保持)
+    - Ipythonコンソールでスクリプトを実行 (実行後も変数、メソッドを保持)
     - 編集中スクリプトの部分実行
     - Ipythonの機能をおおよそ実行可能
 
