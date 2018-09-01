@@ -6,10 +6,10 @@
 scriptencoding utf-8
 
 " include guard
-if !has('nvim') || exists('g:ipython_plugin_loaded')
+if !has('nvim') || exists('b:ipython_plugin_loaded')
     finish
 endif
-let g:ipython_plugin_loaded = 1
+let b:ipython_plugin_loaded = 1
 
 " インスタンス
 let s:ipython = {}
