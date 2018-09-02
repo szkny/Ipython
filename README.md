@@ -62,7 +62,7 @@ let g:ipython_startup_options = [
             \'--colors=Linux',
             \'--no-banner']
 
-let g:ipython_startup_options = []
+let g:ipython_startup_import_modules = []
 ```
 
 ## 関数
