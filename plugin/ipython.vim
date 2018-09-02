@@ -6,12 +6,12 @@
 scriptencoding utf-8
 
 if !has('nvim')
-    echomsg 'Ipython-vim requires Neovim.'
+    echomsg 'Ipython.vim requires Neovim.'
     finish
 endif
 
 if !exists('*splitterm#open')
-    echomsg 'Ipython-vim based on szkny/SplitTerm.'
+    echomsg 'Ipython.vim is based on szkny/SplitTerm.'
     finish
 endif
 
