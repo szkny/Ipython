@@ -40,18 +40,23 @@ nnoremap  <leader>ip  :Ipython<CR>
 vnoremap  <leader>ip  :VIpython<CR>
 ```
 
-## Ipythonの起動オプションを指定する
+## オプション
 
 `init.vim`にリストで定義  
 
 ```vimscript
+" ipythonコマンドのコマンドライン引数
 let g:ipython_startup_options = [
             \'--no-confirm-exit',]
 
+" ipython起動時に事前に読み込むパッケージ
 let g:ipython_startup_import_modules = [
             \'import matplotlib.pyplot as plt',
             \'import pandas as pd',
             \'import numpy as np']
+
+" ウィンドウ幅 ( 0 にすると自動で設定)
+let g:ipython_window_width = 0
 ```
 
 以下はデフォルト  
@@ -63,6 +68,8 @@ let g:ipython_startup_options = [
             \'--no-banner']
 
 let g:ipython_startup_import_modules = []
+
+let g:ipython_window_width = 10
 ```
 
 ## 関数

@@ -29,6 +29,9 @@ if type(g:ipython_startup_import_modules) != 3
     finish
 endif
 
+" 分割ウィンドウのオプション
+let g:ipython_window_width = get(g:, 'ipython_window_width', 10)
+
 fun! ipython#open() abort
     if !ipython#exist()
         let l:command = 'ipython'
@@ -43,7 +46,7 @@ fun! ipython#open() abort
         let s:ipython.script_name = expand('%:p')
         let s:ipython.script_dir = expand('%:p:h')
         let l:script_winid = win_getid()
-        call splitterm#open(l:command, l:args)
+        call splitterm#open_width(5, l:command, l:args)
         let s:ipython.info = splitterm#getinfo()
         silent exe 'normal G'
         call win_gotoid(l:script_winid)
