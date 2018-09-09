@@ -88,7 +88,10 @@ fun! s:init_ipython() abort
                 \'mgc("%autoreload 2")']
     let l:ipython_init_command += g:ipython_startup_import_modules
     if &filetype ==# 'python'
-        let l:ipython_init_command += ['from '.expand('%:t:r').' import *']
+        let l:ipython_init_command += ['try:',
+                                      \'    from '.expand('%:t:r').' import *',
+                                      \'except:',
+                                      \'    pass']
     endif
     call writefile(l:ipython_init_command, l:ipython_startup_file)
     return l:profile_name
