@@ -105,7 +105,7 @@ fun! s:run_script() abort
         if has_key(s:ipython, 'script_name')
             \&& s:ipython.script_name !=# l:script_name
             call splitterm#jobsend_id(s:ipython.info, '%reset')
-            call splitterm#jobsend_id(s:ipython.info, 'y')
+            call splitterm#jobsend_id_freestyle(s:ipython.info, "y\<CR>")
         endif
         if has_key(s:ipython, 'script_dir')
             \ && s:ipython.script_dir !=# l:script_dir
