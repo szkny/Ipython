@@ -105,11 +105,14 @@ fun! s:run_script() abort
         if has_key(s:ipython, 'script_name')
             \&& s:ipython.script_name !=# l:script_name
             call splitterm#jobsend_id(s:ipython.info, '%reset')
+            python3 import time; time.sleep(0.1)
             call splitterm#jobsend_id_freestyle(s:ipython.info, "y\<CR>")
+            python3 import time; time.sleep(0.1)
         endif
         if has_key(s:ipython, 'script_dir')
             \ && s:ipython.script_dir !=# l:script_dir
             call splitterm#jobsend_id(s:ipython.info, '%cd '.l:script_dir)
+            python3 import time; time.sleep(0.1)
         endif
         let s:ipython.script_name = l:script_name
         let s:ipython.script_dir = l:script_dir
