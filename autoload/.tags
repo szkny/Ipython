@@ -1,0 +1,19 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+b:ipython_plugin_loaded	ipython.vim	/^let b:ipython_plugin_loaded = 1$/;"	v
+g:ipython_startup_import_modules	ipython.vim	/^let g:ipython_startup_import_modules = get(g:, 'ipython_startup_import_modules', [])$/;"	v
+g:ipython_startup_options	ipython.vim	/^let g:ipython_startup_options = get(g:, 'ipython_options',$/;"	v
+g:ipython_window_width	ipython.vim	/^let g:ipython_window_width = get(g:, 'ipython_window_width', 10)$/;"	v
+init_ipython	ipython.vim	/^fun! s:init_ipython() abort$/;"	f
+ipython#close	ipython.vim	/^fun! ipython#close() abort$/;"	f
+ipython#exist	ipython.vim	/^fun! ipython#exist() abort$/;"	f
+ipython#open	ipython.vim	/^fun! ipython#open() abort$/;"	f
+ipython#run	ipython.vim	/^fun! ipython#run(...) abort$/;"	f
+ipython#run_visual	ipython.vim	/^fun! ipython#run_visual() abort range$/;"	f
+ipython#toggle	ipython.vim	/^fun! ipython#toggle() abort$/;"	f
+run_script	ipython.vim	/^fun! s:run_script() abort$/;"	f
+s:ipython	ipython.vim	/^let s:ipython = {}$/;"	v
