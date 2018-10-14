@@ -5,16 +5,13 @@
 "=============================================================================
 scriptencoding utf-8
 
-" include guard
+"" include guard
 if !has('nvim') || exists('b:ipython_plugin_loaded')
     finish
 endif
 let b:ipython_plugin_loaded = 1
 
-" インスタンス
-let s:ipython = {}
-
-" ipythonの起動オプション
+"" ipythonの起動オプション
 let g:ipython_startup_options = get(g:, 'ipython_options',
             \['--no-confirm-exit',
             \'--colors=Linux',
@@ -23,14 +20,27 @@ if type(g:ipython_startup_options) != 3
     echomsg 'the variable "g:ipython_startup_options" must be list.'
     finish
 endif
+
 let g:ipython_startup_import_modules = get(g:, 'ipython_startup_import_modules', [])
 if type(g:ipython_startup_import_modules) != 3
     echomsg 'the variable "g:ipython_startup_import_modules" must be list.'
     finish
 endif
 
-" 分割ウィンドウのオプション
+" ipythonコンソールを表示する分割ウィンドウの幅
 let g:ipython_window_width = get(g:, 'ipython_window_width', 10)
+
+"" インスタンス
+let s:ipython = {}
+
+" 以下、関数定義
+fun! ipython#toggle() abort
+    if ipython#exist()
+        call ipython#close()
+    else
+        call ipython#open()
+    endif
+endf
 
 fun! ipython#open() abort
     if !ipython#exist()
@@ -52,7 +62,6 @@ fun! ipython#open() abort
         call win_gotoid(l:script_winid)
     endif
 endf
-
 
 fun! ipython#close() abort
     if ipython#exist()
@@ -105,11 +114,14 @@ fun! s:run_script() abort
         if has_key(s:ipython, 'script_name')
             \&& s:ipython.script_name !=# l:script_name
             call splitterm#jobsend_id(s:ipython.info, '%reset')
-            call splitterm#jobsend_id(s:ipython.info, 'y')
+            python3 import time; time.sleep(0.1)
+            call splitterm#jobsend_id_freestyle(s:ipython.info, "y\<CR>")
+            python3 import time; time.sleep(0.1)
         endif
         if has_key(s:ipython, 'script_dir')
             \ && s:ipython.script_dir !=# l:script_dir
             call splitterm#jobsend_id(s:ipython.info, '%cd '.l:script_dir)
+            python3 import time; time.sleep(0.1)
         endif
         let s:ipython.script_name = l:script_name
         let s:ipython.script_dir = l:script_dir
