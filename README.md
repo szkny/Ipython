@@ -46,14 +46,10 @@ vnoremap  <leader>ip  :VIpython<CR>
 
 ```vimscript
 " ipythonコマンドのコマンドライン引数
-let g:ipython_startup_options = [
-            \'--no-confirm-exit',]
+let g:ipython_startup_options = ['--no-confirm-exit']
 
 " ipython起動時に事前に読み込むパッケージ
-let g:ipython_startup_import_modules = [
-            \'import matplotlib.pyplot as plt',
-            \'import pandas as pd',
-            \'import numpy as np']
+let g:ipython_startup_import_modules = ['from pylab import *', 'import pandas as pd']
 
 " ウィンドウ幅 ( 0 にすると自動で設定)
 let g:ipython_window_width = 0
