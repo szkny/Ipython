@@ -48,8 +48,13 @@ vnoremap  <leader>ip  :VIpython<CR>
 " ipythonコマンドのコマンドライン引数
 let g:ipython_startup_options = ['--no-confirm-exit']
 
-" ipython起動時に事前に読み込むパッケージ
-let g:ipython_startup_import_modules = ['from pylab import *', 'import pandas as pd']
+" ipython起動時実行するコマンドリスト
+let g:ipython_startup_command = [
+            \'from pylab import *',
+            \'import pandas as pd',
+            \'pd.options.display.max_rows = 10',
+            \'pd.options.display.max_columns = 10',
+            \'pd.options.display.precision = 3']
 
 " ウィンドウ幅 ( 0 にすると自動で設定)
 let g:ipython_window_width = 0
@@ -63,7 +68,7 @@ let g:ipython_startup_options = [
             \'--colors=Linux',
             \'--no-banner']
 
-let g:ipython_startup_import_modules = []
+let g:ipython_startup_command = []
 
 let g:ipython_window_width = 10
 ```

@@ -21,9 +21,9 @@ if type(g:ipython_startup_options) != 3
     finish
 endif
 
-let g:ipython_startup_import_modules = get(g:, 'ipython_startup_import_modules', [])
-if type(g:ipython_startup_import_modules) != 3
-    echomsg 'the variable "g:ipython_startup_import_modules" must be list.'
+let g:ipython_startup_command = get(g:, 'ipython_startup_command', [])
+if type(g:ipython_startup_command) != 3
+    echomsg 'the variable "g:ipython_startup_command" must be list.'
     finish
 endif
 
@@ -95,7 +95,7 @@ fun! s:init_ipython() abort
                 \'mgc = get_ipython().magic',
                 \'mgc("%load_ext autoreload")',
                 \'mgc("%autoreload 2")']
-    let l:ipython_init_command += g:ipython_startup_import_modules
+    let l:ipython_init_command += g:ipython_startup_command
     if &filetype ==# 'python'
         let l:ipython_init_command += ['try:',
                                       \'    from '.expand('%:t:r').' import *',
