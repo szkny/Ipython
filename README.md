@@ -82,3 +82,7 @@ let g:ipython_window_width = 10
 | ipython#exist()      | ipythonウィンドウの存在確認            |
 | ipython#run()        | 現在編集中のPythonスクリプトを実行する |
 | ipython#run_visual() | Visual modeで選択している行を実行する  |
+
+## スクリーンショット
+
+![](https://github.com/wiki/szkny/Ipython/images/gif1.gif)
