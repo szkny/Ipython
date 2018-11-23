@@ -85,4 +85,4 @@ let g:ipython_window_width = 10
 
 ## スクリーンショット
 
-![](https://github.com/wiki/szkny/Ipython/images/gif1.gif)
+![](https://github.com/szkny/Ipython/wiki/images/demo1.gif)
