@@ -43,7 +43,7 @@ fun! ipython#toggle() abort
 endf
 
 fun! ipython#open() abort
-    if !ipython#exist()
+    if &filetype ==? 'python' && !ipython#exist()
         let l:command = 'ipython'
         let g:ipython_startup_options += ['--profile='.s:init_ipython()]
         let l:args = join(g:ipython_startup_options, ' ')
@@ -52,20 +52,25 @@ fun! ipython#open() abort
             \ && findfile('Pipfile.lock', expand('%:p')) !=# ''
             let l:command = 'pipenv run ipython'
         endif
-        let s:ipython = {}
-        let s:ipython.script_name = expand('%:p')
-        let s:ipython.script_dir = expand('%:p:h')
+        if !exists('s:ipython')
+            let s:ipython = {}
+        endif
+        let l:tnr = tabpagenr()
+        let l:ipython_obj = {}
+        let l:ipython_obj.script_name = expand('%:p')
+        let l:ipython_obj.script_dir = expand('%:p:h')
         let l:script_winid = win_getid()
-        let s:ipython.info =
-                    \splitterm#open_width(g:ipython_window_width, l:command, l:args)
+        let l:ipython_obj.info =
+                    \ splitterm#open_width(g:ipython_window_width, l:command, l:args)
         silent exe 'normal G'
         call win_gotoid(l:script_winid)
+        let s:ipython[l:tnr] = l:ipython_obj
     endif
 endf
 
 fun! ipython#close() abort
     if ipython#exist()
-        call splitterm#close(s:ipython.info)
+        call splitterm#close(s:ipython[tabpagenr()].info)
     endif
 endf
 
@@ -96,12 +101,10 @@ fun! s:init_ipython() abort
                 \'mgc("%load_ext autoreload")',
                 \'mgc("%autoreload 2")']
     let l:ipython_init_command += g:ipython_startup_command
-    if &filetype ==# 'python'
-        let l:ipython_init_command += ['try:',
-                                      \'    from '.expand('%:t:r').' import *',
-                                      \'except:',
-                                      \'    pass']
-    endif
+    let l:ipython_init_command += ['try:',
+                                  \'    from '.expand('%:t:r').' import *',
+                                  \'except:',
+                                  \'    pass']
     call writefile(l:ipython_init_command, l:ipython_startup_file)
     return l:profile_name
 endf
@@ -111,21 +114,21 @@ fun! s:run_script() abort
     if &filetype ==# 'python'
         let l:script_name = expand('%:p')
         let l:script_dir = expand('%:p:h')
-        if has_key(s:ipython, 'script_name')
-            \&& s:ipython.script_name !=# l:script_name
-            call splitterm#jobsend_id(s:ipython.info, '%reset')
+        if has_key(s:ipython[tabpagenr()], 'script_name')
+            \&& s:ipython[tabpagenr()].script_name !=# l:script_name
+            call splitterm#jobsend_id(s:ipython[tabpagenr()].info, '%reset')
             python3 import time; time.sleep(0.1)
-            call splitterm#jobsend_id_freestyle(s:ipython.info, "y\<CR>")
-            python3 import time; time.sleep(0.1)
-        endif
-        if has_key(s:ipython, 'script_dir')
-            \ && s:ipython.script_dir !=# l:script_dir
-            call splitterm#jobsend_id(s:ipython.info, '%cd '.l:script_dir)
+            call splitterm#jobsend_id_freestyle(s:ipython[tabpagenr()].info, "y\<CR>")
             python3 import time; time.sleep(0.1)
         endif
-        let s:ipython.script_name = l:script_name
-        let s:ipython.script_dir = l:script_dir
-        call splitterm#jobsend_id(s:ipython.info, '%run '.s:ipython.script_name)
+        if has_key(s:ipython[tabpagenr()], 'script_dir')
+            \ && s:ipython[tabpagenr()].script_dir !=# l:script_dir
+            call splitterm#jobsend_id(s:ipython[tabpagenr()].info, '%cd '.l:script_dir)
+            python3 import time; time.sleep(0.1)
+        endif
+        let s:ipython[tabpagenr()].script_name = l:script_name
+        let s:ipython[tabpagenr()].script_dir = l:script_dir
+        call splitterm#jobsend_id(s:ipython[tabpagenr()].info, '%run '.s:ipython[tabpagenr()].script_name)
     endif
 endf
 
@@ -149,7 +152,7 @@ fun! ipython#run_visual() abort range
     if ipython#exist()
         if &filetype ==# 'python'
             exe 'silent normal gvy'
-            call splitterm#jobsend_id(s:ipython.info, '%paste')
+            call splitterm#jobsend_id(s:ipython[tabpagenr()].info, '%paste')
         endif
     else
         call ipython#open()
@@ -159,12 +162,27 @@ endf
 
 fun! ipython#exist() abort
     if exists('s:ipython')
-        \&& has_key(s:ipython, 'script_name')
-        \&& has_key(s:ipython, 'script_dir')
-        \&& has_key(s:ipython, 'info')
-        if splitterm#exist(s:ipython.info)
-            return 1
+        let l:tnr = tabpagenr()
+        if has_key(s:ipython, l:tnr)
+            \&& has_key(s:ipython[l:tnr], 'script_name')
+            \&& has_key(s:ipython[l:tnr], 'script_dir')
+            \&& has_key(s:ipython[l:tnr], 'info')
+            if splitterm#exist(s:ipython[l:tnr].info)
+                return 1
+            else
+                call remove(s:ipython, l:tnr)
+                return 0
+            endif
+        else
+            return 0
         endif
+    else
+        let s:ipython = {}
+        return 0
     endif
-    return 0
+endf
+
+
+fun! ipython#getinfo() abort
+    return s:ipython
 endf
