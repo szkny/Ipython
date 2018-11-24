@@ -55,7 +55,6 @@ fun! ipython#open() abort
         if !exists('s:ipython')
             let s:ipython = {}
         endif
-        let l:tnr = tabpagenr()
         let l:ipython_obj = {}
         let l:ipython_obj.script_name = expand('%:p')
         let l:ipython_obj.script_dir = expand('%:p:h')
@@ -64,7 +63,7 @@ fun! ipython#open() abort
                     \ splitterm#open_width(g:ipython_window_width, l:command, l:args)
         silent exe 'normal G'
         call win_gotoid(l:script_winid)
-        let s:ipython[l:tnr] = l:ipython_obj
+        let s:ipython[tabpagenr()] = l:ipython_obj
     endif
 endf
 
