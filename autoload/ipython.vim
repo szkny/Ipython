@@ -56,8 +56,8 @@ fun! ipython#open() abort
         let s:ipython.script_name = expand('%:p')
         let s:ipython.script_dir = expand('%:p:h')
         let l:script_winid = win_getid()
-        call splitterm#open_width(g:ipython_window_width, l:command, l:args)
-        let s:ipython.info = splitterm#getinfo()
+        let s:ipython.info =
+                    \splitterm#open_width(g:ipython_window_width, l:command, l:args)
         silent exe 'normal G'
         call win_gotoid(l:script_winid)
     endif
