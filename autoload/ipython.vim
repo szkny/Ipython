@@ -151,7 +151,7 @@ fun! ipython#run_visual() abort range
     if ipython#exist()
         if &filetype ==# 'python'
             exe 'silent normal gvy'
-            call splitterm#jobsend_id(s:ipython[tabpagenr()].info, '%paste')
+            call splitterm#jobsend_id(s:ipython[tabpagenr()].info, '%paste -q')
         endif
     else
         call ipython#open()
