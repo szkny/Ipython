@@ -49,8 +49,9 @@ endf
 fun! ipython#open() abort
     if &filetype ==? 'python' && !ipython#exist()
         let l:command = 'ipython'
-        let g:ipython_startup_options += ['--profile='.s:init_ipython()]
-        let l:args = join(g:ipython_startup_options, ' ')
+        let l:options = g:ipython_startup_options
+            \ + ['--profile='.s:init_ipython()]
+        let l:args = join(l:options, ' ')
         let l:filename = ' ' . expand('%')
         if findfile('Pipfile', expand('%:p')) !=# ''
             \ && findfile('Pipfile.lock', expand('%:p')) !=# ''
