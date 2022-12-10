@@ -68,7 +68,11 @@ let g:ipython_startup_options = [
             \'--colors=Linux',
             \'--no-banner']
 
-let g:ipython_startup_command = []
+let g:ipython_startup_command = [
+            \'from IPython import get_ipython',
+            \'mgc = get_ipython().run_line_magic',
+            \'mgc("load_ext", "autoreload")',
+            \'mgc("autoreload", "2")']
 
 let g:ipython_window_width = 10
 ```

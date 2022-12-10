@@ -12,8 +12,8 @@ endif
 let b:ipython_plugin_loaded = 1
 
 "" ipythonの起動オプション
-let g:ipython_startup_options = get(g:, 'ipython_options',
-            \['--no-confirm-exit',
+let g:ipython_startup_options = get(g:, 'ipython_options', [
+            \'--no-confirm-exit',
             \'--colors=Linux',
             \'--no-banner'])
 if type(g:ipython_startup_options) != 3
@@ -21,7 +21,11 @@ if type(g:ipython_startup_options) != 3
     finish
 endif
 
-let g:ipython_startup_command = get(g:, 'ipython_startup_command', [])
+let g:ipython_startup_command = get(g:, 'ipython_startup_command', [
+            \'from IPython import get_ipython',
+            \'mgc = get_ipython().run_line_magic',
+            \'mgc("load_ext", "autoreload")',
+            \'mgc("autoreload", "2")'])
 if type(g:ipython_startup_command) != 3
     echomsg 'the variable "g:ipython_startup_command" must be list.'
     finish
@@ -94,12 +98,7 @@ fun! s:init_ipython() abort
         call mkdir(l:ipython_startup_dir, 'p')
     endif
     let l:ipython_startup_file = l:ipython_startup_dir . '/startup.py'
-    let l:ipython_init_command = [
-                \'from IPython import get_ipython',
-                \'mgc = get_ipython().magic',
-                \'mgc("%load_ext autoreload")',
-                \'mgc("%autoreload 2")']
-    let l:ipython_init_command += g:ipython_startup_command
+    let l:ipython_init_command = g:ipython_startup_command
     let l:ipython_init_command += ['try:',
                                   \'    from '.expand('%:t:r').' import *',
                                   \'except:',
