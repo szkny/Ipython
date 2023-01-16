@@ -101,7 +101,7 @@ fun! s:init_ipython() abort
     let l:ipython_startup_file = l:ipython_startup_dir . '/startup.py'
     let l:ipython_init_command = deepcopy(g:ipython_startup_command)
     let l:ipython_init_command += ['try:',
-                                  \'    from '.expand('%:r').' import *',
+                                  \'    from '.expand('%:r:gs?\/?\.?').' import *',
                                   \'except:',
                                   \'    pass']
     call writefile(l:ipython_init_command, l:ipython_startup_file)
