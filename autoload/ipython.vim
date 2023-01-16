@@ -53,8 +53,8 @@ fun! ipython#open() abort
             \ + ['--profile='.s:init_ipython()]
         let l:args = join(l:options, ' ')
         let l:filename = ' ' . expand('%')
-        if findfile('Pipfile', expand('%:p')) !=# ''
-            \ && findfile('Pipfile.lock', expand('%:p')) !=# ''
+        if findfile('Pipfile') !=# ''
+            \ && findfile('Pipfile.lock') !=# ''
             let l:command = 'pipenv run ipython'
         endif
         if !exists('s:ipython')
